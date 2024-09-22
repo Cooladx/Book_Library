@@ -3,3 +3,30 @@
     padding: 0;
     box-sizing: border-box;
     }
+
+
+    body {
+      background-color: paleturquoise;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 40px;
+    }
+
+    .bookForm {
+      display: flex;
+      justify-content: center;
+      max-height: 50vh;
+
+    }
+    form {
+     font-size: 25px;
+     
+     
+    }
+
+    form label, form input {
+      margin-bottom: 0.5rem ; /* Adds space below each element */
+      display: block; /* Ensures each element is on a new line */
+    }

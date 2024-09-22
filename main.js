@@ -3,6 +3,22 @@
 const myLibrary = [];
 
 
+
+// Function to display each book on the page. Created through the DOM as they are since the books
+// will be created through their own div on flexbox to ensure they are centered and flexiable.
+// Loops through the array of myLibrary, taking those object books and sents it to a div.
+
+function displayBook ()
+{
+    // Loops through myLibrary which will 
+    for (i = 0; i < myLibrary.length; i++)
+    {
+
+    }
+
+};
+
+
 // the constructor to create books for the user depending on their input data
 function Book (title, author, pageNumber, status) 
 {
@@ -34,40 +50,63 @@ function Book (title, author, pageNumber, status)
 // Selects the add book button
 let addBook = document.querySelector("button")
 
-// On click from the user, run the addBookToLibrary function
-addBook.onclick = () =>
+// On click from the user, run the addBookToLibrary function and sent event as a parameter
+// for event.preventDefault
+addBook.onclick = (event) =>
 {
-    addBookToLibrary();
+    addBookToLibrary(event);
 }
 
 // This function will prompt user to add book and then send that book to myLibrary to be stored as an object in the array. 
 // It can run more than once for the user if they wish to add more books.
-function addBookToLibrary() 
+function addBookToLibrary(event) 
 {
 // Listens for user input by setting up listener event to track when they click
 // Prompts user to add a book
     
+// Allows data to be flowed in through javascript and not the server automatically.
+    event.preventDefault()
+  
+    
+    const bookTitle = document.querySelector("#bookName");
+    const authorName = document.querySelector("#authorName");
+    const numofPages = document.querySelector("#numOfpages");
+    const onlineStatus = document.querySelector("#Online");
+    const offlineStatus = document.querySelector("#Offline");
 
-    addBook.addEventListener("click", () =>
+    let status = false;
+        
+    if (!bookTitle.value || !authorName.value || !numofPages.value || (!onlineStatus.checked && !offlineStatus.checked)) 
     {
-    
-     if (!authorName)
-        {
-            addBookToLibrary();
-        }
+        return console.log("Warning: you have not entered all inputs in the form. Please try again");
+   
+    }
+     // Check for which status button was chosen to then pik that one for putting into the object
+            // depending on if book was read or not
+            // Iterate through the group1 name attribute to determine which radio button was selected
+            // Yes read or haven't read.
+               
+    else if(onlineStatus.checked) 
+    {
+        status = true;
+    }
+        
     else
-        {
-            
-        }
-    
-    });
-
-
-    // 
-
+    {
+        status = false;
+    }
+    myLibrary.push(new Book( bookTitle.value, authorName.value, numofPages.value, status));
+        
 }
 
-console.log("hello")
+
+
+
+
+
+
+
+
 
 
 // IN PRODUCTION FOR WHAT TO FINISH
