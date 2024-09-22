@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Library</title>
+</head>
+<body>
+<form>
+    <!-- Takes bookName, input validation should be string value -->
+    <label for="bookName">
+        Book name:
+    </label>
+    <input>
+    <br>
+    <!-- Takes authorName, input validation should be string value -->
+    <label for="authorName">
+        Author name:
+    </label>
+    <input>
+    <br>
+    <!-- Takes number of pages, input validation should be INT value -->
+    <label for="numberOfPages">
+        # of pages:
+    </label>
+    <input>
+    <br>
+    <!-- Takes status on if you read a book or not, input validation should be a radio with label yes or no which is just user selection -->
+    <label for="status">
+        Status:
+    </label>
+    <br>
+    <input type="radio" value="yes" name="group1">
+    <label for="YES">Have read</label>
+    <br>
+    <input type="radio" value="no" name="group1">
+    <label for="NO">Not read</label>
+    <br>
+    <br>
+      <!-- Takes button, will send data to the DOM to be parsed to then display your book as a card. -->
+    <button>Add book</button> 
+</form>
+
+
+
+
+  
+    <script src="main.js"></script>
+</body>
+</html>
