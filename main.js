@@ -11,6 +11,7 @@ const myLibrary = [];
 function displayBook ()
 {
     let container = document.querySelector("#container");
+
     console.log(container);
 
     container.textContent = '';
@@ -18,12 +19,29 @@ function displayBook ()
     // Loops through myLibrary which will check in the myLibrary index and will create a new DIV for the book contents to be displayed on.
     for (i = 0; i < myLibrary.length; i++)
     {
-        let div = document.createElement("div");
+        let table = document.createElement("table");
+        table.setAttribute("data-index", i);
+        table.classList.add("bookTable");
+        container.appendChild(table);
+        table.textContent = myLibrary[i].info();
 
-        div.setAttribute("data-index", i);
-        div.classList.add("bookDiv");
-        container.appendChild(div);
-        div.textContent = myLibrary[i].info();
+        let authorField = document.createElement("td");
+        table.appendChild(authorField)
+        authorField.textContent = myLibrary[i].author; //getAuthor();
+
+        // Create toggle button for each book line
+        let toggleButton = document.createElement("button");
+        toggleButton.setAttribute("data-index", i);
+        toggleButton.classList.add ("toggleBook");
+        table.appendChild(toggleButton);
+        toggleButton.textContent = "TOGGLE"
+
+       // Creates delete button for each book line
+        let delButton = document.createElement("button");
+        delButton.setAttribute("data-index", i);
+        delButton.classList.add ("removeBook");
+        table.appendChild(delButton);
+        delButton.textContent = "DELETE"
 
     }
 
@@ -56,6 +74,16 @@ function Book (title, author, pageNumber, status)
         {
             return [this.title, this.author, this.pageNumber, this.status()];
         }
+    
+    this.getTitle = () =>
+    {
+        return this.title;
+    }
+
+    this.getAuthor = () =>
+    {
+        return this.author;
+    }
 };
 
 // Selects the add book button
@@ -108,10 +136,6 @@ function addBookToLibrary(event)
     displayBook();
         
 }
-
-
-
-
 
 
 
