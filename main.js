@@ -10,9 +10,20 @@ const myLibrary = [];
 
 function displayBook ()
 {
-    // Loops through myLibrary which will 
+    let container = document.querySelector("#container");
+    console.log(container);
+
+    container.textContent = '';
+
+    // Loops through myLibrary which will check in the myLibrary index and will create a new DIV for the book contents to be displayed on.
     for (i = 0; i < myLibrary.length; i++)
     {
+        let div = document.createElement("div");
+
+        div.setAttribute("data-index", i);
+        div.classList.add("bookDiv");
+        container.appendChild(div);
+        div.textContent = myLibrary[i].info();
 
     }
 
@@ -48,7 +59,7 @@ function Book (title, author, pageNumber, status)
 };
 
 // Selects the add book button
-let addBook = document.querySelector("button")
+let addBook = document.querySelector(".addBook")
 
 // On click from the user, run the addBookToLibrary function and sent event as a parameter
 // for event.preventDefault
@@ -61,9 +72,6 @@ addBook.onclick = (event) =>
 // It can run more than once for the user if they wish to add more books.
 function addBookToLibrary(event) 
 {
-// Listens for user input by setting up listener event to track when they click
-// Prompts user to add a book
-    
 // Allows data to be flowed in through javascript and not the server automatically.
     event.preventDefault()
   
@@ -81,11 +89,8 @@ function addBookToLibrary(event)
         return console.log("Warning: you have not entered all inputs in the form. Please try again");
    
     }
-     // Check for which status button was chosen to then pik that one for putting into the object
-            // depending on if book was read or not
-            // Iterate through the group1 name attribute to determine which radio button was selected
-            // Yes read or haven't read.
-               
+     // Check for which status button was chosen to then pick that one for putting into the object
+    // depending on if book was read or not
     else if(onlineStatus.checked) 
     {
         status = true;
@@ -95,7 +100,12 @@ function addBookToLibrary(event)
     {
         status = false;
     }
-    myLibrary.push(new Book( bookTitle.value, authorName.value, numofPages.value, status));
+    // After all data is grabbed via DOM and status has been determined, this new book 
+    // will be pushed onto the end of the array for myLibrary
+    let pushBook = myLibrary.push(new Book(bookTitle.value, authorName.value, numofPages.value, status));
+    
+    // Take the book that has been constructored with user's input and send it to displayBook function
+    displayBook();
         
 }
 

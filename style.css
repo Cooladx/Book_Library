@@ -30,3 +30,12 @@
       margin-bottom: 0.5rem ; /* Adds space below each element */
       display: block; /* Ensures each element is on a new line */
     }
+
+    .addBook {
+      padding: 1rem;
+    }
+    
+    /* Class made from javascript DOM. Setting the size */
+    .bookDiv {
+      max-width: fit-content;
+    }
