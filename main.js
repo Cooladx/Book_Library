@@ -23,26 +23,70 @@ function displayBook ()
         table.setAttribute("data-index", i);
         table.classList.add("bookTable");
         container.appendChild(table);
-        table.textContent = myLibrary[i].info();
+       
+        let tableRow = document.createElement("tr");
+        table.appendChild(tableRow);
+
+        let titleField = document.createElement("td");
+        tableRow.appendChild(titleField);
+        titleField.textContent = myLibrary[i].title; 
 
         let authorField = document.createElement("td");
-        table.appendChild(authorField)
-        authorField.textContent = myLibrary[i].author; //getAuthor();
+        tableRow.appendChild(authorField);
+        authorField.textContent = myLibrary[i].author; 
+
+        let pageNumberField = document.createElement("td");
+        tableRow.appendChild(pageNumberField);
+        pageNumberField.textContent = myLibrary[i].pageNumber; 
+
+        let statusField = document.createElement("td");
+        tableRow.appendChild(statusField);
+        statusField.textContent = myLibrary[i].status(); 
 
         // Create toggle button for each book line
         let toggleButton = document.createElement("button");
         toggleButton.setAttribute("data-index", i);
         toggleButton.classList.add ("toggleBook");
-        table.appendChild(toggleButton);
+        tableRow.appendChild(toggleButton);
         toggleButton.textContent = "TOGGLE"
 
        // Creates delete button for each book line
         let delButton = document.createElement("button");
         delButton.setAttribute("data-index", i);
         delButton.classList.add ("removeBook");
-        table.appendChild(delButton);
+        tableRow.appendChild(delButton);
         delButton.textContent = "DELETE"
 
+        // EventListener to remove a book table when clicked.
+        delButton.addEventListener("click", function removeBookFromLibrary ()
+        {
+            let index = (this.getAttribute("data-index"));
+            // Testing via console to see if it gets correct index
+            console.log("Deleting book at index:", index);
+            myLibrary.splice(index, 1);
+            displayBook();
+            // Testing console after deleting index from EventListener button
+            console.log("New myLibrary:", myLibrary);
+        
+        });
+        
+        toggleButton.addEventListener("click", function toggleBookInLibrary ()
+        {
+        let index = (this.getAttribute("data-index"));
+        console.log("Toggling button at index: ", index);
+        console.log(myLibrary[index].info());
+        
+
+        // Had to tweak this a bit by adding a new method isRead in the book constructor.
+        // isRead to be used for negating the data-index of a status dom element by checking status that is now negated to be toggled from book constructor
+        myLibrary[index].isRead = !myLibrary[index].isRead;
+        console.log(myLibrary[index].info());
+        statusField.textContent = myLibrary[index].status();
+        console.log("New myLibrary:", myLibrary);
+        displayBook();
+        });
+        
+      
     }
 
 };
@@ -54,36 +98,41 @@ function Book (title, author, pageNumber, status)
     this.title = title;
     this.author = author;
     this.pageNumber = pageNumber;
+    // method to get current status if book is read or not
+    // Will be used for toggle button is displayBook()
+    this.isRead = status; 
     this.status = () => 
      {
-        if (status === true)
-        {
-            return "have read";
-        }
-
-        else
-        {
-            return "have not read"
-        }
-    
-
+        return this.isRead ? "have read" : "have not read";
      }
 
-     // Displays the contents of a given book.
+     // Displays the contents of a given book. Mainly to error check but user can check contents of their object book in console with this.
      this.info = () =>
         {
             return [this.title, this.author, this.pageNumber, this.status()];
         }
-    
+    // Returns the title of the book, neededx for displayBook function to fill in the table
     this.getTitle = () =>
     {
         return this.title;
     }
-
+// Returns the author of the book, needed for displayBook function to fill in the table
     this.getAuthor = () =>
     {
         return this.author;
     }
+    // Returns the page number of the book, needed for displayBook function to fill in the table
+    this.getPageNumber = () =>
+        {
+            return this.pageNumber;
+        }
+    // Returns the status of the book, needed for displayBook function to fill in the table
+    this.getStatus = () =>
+        {
+            return this.status();
+        }
+
+       
 };
 
 // Selects the add book button
@@ -91,11 +140,7 @@ let addBook = document.querySelector(".addBook")
 
 // On click from the user, run the addBookToLibrary function and sent event as a parameter
 // for event.preventDefault
-addBook.onclick = (event) =>
-{
-    addBookToLibrary(event);
-}
-
+addBook.addEventListener('click', addBookToLibrary);
 // This function will prompt user to add book and then send that book to myLibrary to be stored as an object in the array. 
 // It can run more than once for the user if they wish to add more books.
 function addBookToLibrary(event) 
@@ -130,12 +175,14 @@ function addBookToLibrary(event)
     }
     // After all data is grabbed via DOM and status has been determined, this new book 
     // will be pushed onto the end of the array for myLibrary
-    let pushBook = myLibrary.push(new Book(bookTitle.value, authorName.value, numofPages.value, status));
+     myLibrary.push(new Book(bookTitle.value, authorName.value, numofPages.value, status));
     
     // Take the book that has been constructored with user's input and send it to displayBook function
     displayBook();
         
 }
+
+
 
 
 
