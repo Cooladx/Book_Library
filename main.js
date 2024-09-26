@@ -12,21 +12,26 @@ function displayBook ()
 {
     let container = document.querySelector("#container");
 
+    // Testing to see if container pops up.
     console.log(container);
 
+    // Clears the whole container, but very important to have outside the loop so it does it once and ONLY before the loop upon click of add book.
     container.textContent = '';
 
     // Loops through myLibrary which will check in the myLibrary index and will create a new DIV for the book contents to be displayed on.
     for (let i = 0; i < myLibrary.length; i++)
     {
+        // Populates a table to hold a book.
         let table = document.createElement("table");
         table.setAttribute("data-index", i);
         table.classList.add("bookTable");
         container.appendChild(table);
        
+        // Populates the row to hold the contents of said book.
         let tableRow = document.createElement("tr");
         table.appendChild(tableRow);
-
+        
+        // 4 td elements side by side in order for the book which are the data itself.
         let titleField = document.createElement("td");
         tableRow.appendChild(titleField);
         titleField.textContent = myLibrary[i].title; 
@@ -159,7 +164,7 @@ function addBookToLibrary(event)
         
     if (!bookTitle.value || !authorName.value || !numofPages.value || (!onlineStatus.checked && !offlineStatus.checked)) 
     {
-        return console.log("Warning: you have not entered all inputs in the form. Please try again");
+        return alert("Warning: you have not entered all inputs in the form. Please try again");
    
     }
      // Check for which status button was chosen to then pick that one for putting into the object
